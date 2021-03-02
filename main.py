@@ -65,12 +65,6 @@ async def before():
     await bot.wait_until_ready()
 
 
-@bot.event
-async def on_reaction_add(reaction, user):
-    print(reaction, user)
-    await reaction.remove(user)
-
-
 check_if_video.start()
 bot.run(TOKEN)
 
