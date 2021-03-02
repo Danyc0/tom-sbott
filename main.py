@@ -8,7 +8,7 @@ from discord.ext import commands, tasks
 load_dotenv()
 TOKEN = os.getenv('DISCORD_TOKEN')
 GOOGLE_API_KEY = os.getenv('API_KEY')
-CHANNEL_IDS = [int(i) for i in os.getenv('CHANNEL_ID').split()]
+CHANNEL_IDS = [int(i) for i in os.getenv('CHANNEL_IDS').split()]
 
 TOM_SCOTT_URL = f'https://www.googleapis.com/youtube/v3/search?key={GOOGLE_API_KEY}&channelId=UCBa659QWEk1AI4Tg--mrJ2A&part=snippet,id&order=date&maxResults=1'
 
