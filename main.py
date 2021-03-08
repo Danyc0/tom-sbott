@@ -10,9 +10,9 @@ load_dotenv()
 TOKEN = os.getenv('DISCORD_TOKEN')
 GOOGLE_API_KEY = os.getenv('API_KEY')
 CHANNEL_IDS = [int(i) for i in os.getenv('CHANNEL_IDS').split()]
+POLL_FREQ_MINS = int(os.getenv('POLL_FREQ_MINS'))
 
 TOM_SCOTT_URL = f'https://www.googleapis.com/youtube/v3/search?key={GOOGLE_API_KEY}&channelId=UCBa659QWEk1AI4Tg--mrJ2A&part=snippet,id&order=date&maxResults=1'
-
 
 bot = commands.Bot(command_prefix='~')
 
@@ -46,7 +46,7 @@ async def latest(context):
     await context.send(result)
 
 
-@tasks.loop(hours=1)
+@tasks.loop(minutes=POLL_FREQ_MINS)
 async def check_if_video():
     global last_video_id
 
