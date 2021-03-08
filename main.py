@@ -1,5 +1,6 @@
 import os
 import json
+import datetime
 import urllib.request
 from dotenv import load_dotenv
 
@@ -17,6 +18,9 @@ bot = commands.Bot(command_prefix='~')
 
 last_video_id = ''
 
+def log(output_str):
+    print(datetime.datetime.now().strftime('%d/%m/%y %H:%M:%S: ') + output_str)
+
 
 @bot.event
 async def on_ready():
@@ -33,11 +37,9 @@ def get_latest_id():
 
 @bot.command(name='latest', help='Responds with the latest Tom Scott video')
 async def latest(context):
-    print('Latest video requested')
-    
     video_id = get_latest_id()
     result = f'Latest Tom Scott video: https://www.youtube.com/watch?v={video_id}'
-    print(result)
+    log(result)
     await context.send(result)
 
 
@@ -50,14 +52,14 @@ async def check_if_video():
         last_video_id = video_id
 
         result = f'New Tom Scott video: https://www.youtube.com/watch?v={video_id}'
-        print(result)
+        log(result)
 
         for channel_id in CHANNEL_IDS:
             message_channel = bot.get_channel(channel_id)
-            print(f' Sent to #{message_channel.name} in {message_channel.guild}')
+            log(f' Sent to #{message_channel.name} in {message_channel.guild}')
             await message_channel.send(result)
     else:
-        print('No new Tom Scott video :(')
+        log('No new Tom Scott video :(')
 
 
 @check_if_video.before_loop
