@@ -18,6 +18,7 @@ bot = commands.Bot(command_prefix='~')
 
 last_video_id = ''
 
+
 def log(output_str):
     print(datetime.datetime.now().strftime('%d/%m/%y %H:%M:%S: ') + output_str)
 
@@ -28,12 +29,14 @@ async def on_ready():
     for guild in bot.guilds:
         print('  ', guild.name)
 
+
 def get_latest_id():
     req = urllib.request.Request(TOM_SCOTT_URL)
     page = urllib.request.urlopen(req).read()
 
     data = json.loads(page)
     return data['items'][0]['id']['videoId']
+
 
 @bot.command(name='latest', help='Responds with the latest Tom Scott video')
 async def latest(context):
