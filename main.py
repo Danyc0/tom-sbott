@@ -70,6 +70,17 @@ async def before():
     await bot.wait_until_ready()
 
 
+@bot.command(name='search', help='Searches the Tom Scott archives for a search term')
+async def search(context, *term):
+    term = ' '.join(term)
+    safe_term = urllib.parse.quote(term, safe='')
+
+    video_id = get_video_id(f'&q={safe_term}')
+    result = f'Searched for \'{term}\' and found the Tom Scott video: https://www.youtube.com/watch?v={video_id}'
+    log(result)
+    await context.send(result)
+
+
 check_if_video.start()
 bot.run(TOKEN)
 
