@@ -52,8 +52,6 @@ async def check_if_video():
 
     video_id = get_video_id()
     if video_id != last_video_id and last_video_id:
-        last_video_id = video_id
-
         result = f'New Tom Scott video: https://www.youtube.com/watch?v={video_id}'
         log(result)
 
@@ -63,6 +61,7 @@ async def check_if_video():
             await message_channel.send(result)
     else:
         log('No new Tom Scott video :(')
+    last_video_id = video_id
 
 
 @check_if_video.before_loop
