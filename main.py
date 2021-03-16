@@ -60,7 +60,7 @@ async def check_if_video():
             log(f' Sent to #{message_channel.name} in {message_channel.guild}')
             await message_channel.send(result)
     else:
-        log('No new Tom Scott video :(')
+        log(f'No new Tom Scott video :( - Latest ID: {video_id}')
     last_video_id = video_id
 
 
