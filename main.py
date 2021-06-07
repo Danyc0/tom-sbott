@@ -33,12 +33,15 @@ def log(output_str):
 
 @bot.event
 async def on_ready():
-    for channel_id in CHANNEL_IDS:
-        channel = bot.get_channel(channel_id)
-        if channel:
-            message_channels.append(channel)
-        else:
-            log(f' Failed to access channel with ID: {channel_id}')
+    if message_channels:
+        log('on_ready() called but channels already added. Skipping adding channels')
+    else:
+        for channel_id in CHANNEL_IDS:
+            channel = bot.get_channel(channel_id)
+            if channel:
+                message_channels.append(channel)
+            else:
+                log(f' Failed to access channel with ID: {channel_id}')
     print(f'{bot.user.name} has connected to Discord and is in the following channels:')
     for guild in bot.guilds:
         print('  ', guild.name)
