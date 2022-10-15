@@ -7,6 +7,7 @@ import urllib.request
 from dotenv import load_dotenv
 
 from discord.ext import commands, tasks
+from discord import Intents
 
 from quart import Quart
 from quart import request
@@ -20,8 +21,11 @@ RESUBSCRIBE_DAYS = int(os.getenv('RESUBSCRIBE_DAYS'))
 TOM_SCOTT_ID = 'UCBa659QWEk1AI4Tg--mrJ2A'
 TOM_SCOTT_URL = f'https://www.googleapis.com/youtube/v3/search?key={GOOGLE_API_KEY}&channelId={TOM_SCOTT_ID}&part=snippet,id&type=video&maxResults=1'
 
-bot = commands.Bot(command_prefix='~')
 #app = Flask(__name__)
+intents = Intents.default()
+intents.message_content = True
+
+bot = commands.Bot(command_prefix='~', intents=intents)
 app = Quart(__name__)
 
 message_channels = []
@@ -42,7 +46,10 @@ async def on_ready():
                 message_channels.append(channel)
             else:
                 log(f' Failed to access channel with ID: {channel_id}')
-    print(f'{bot.user.name} has connected to Discord and is in the following channels:')
+    resubscribe.start()
+    bot.loop.create_task(app.run_task('0.0.0.0', 5000))
+
+    print(f'{bot.user.name} has connected to Discord and is in the following servers:')
     for guild in bot.guilds:
         print('  ', guild.name)
 
@@ -115,7 +122,5 @@ async def before():
     await bot.wait_until_ready()
 
 
-resubscribe.start()
-bot.loop.create_task(app.run_task('0.0.0.0', 5000))
 bot.run(TOKEN)
 
