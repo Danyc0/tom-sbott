@@ -21,7 +21,6 @@ RESUBSCRIBE_DAYS = int(os.getenv('RESUBSCRIBE_DAYS'))
 TOM_SCOTT_ID = 'UCBa659QWEk1AI4Tg--mrJ2A'
 TOM_SCOTT_URL = f'https://www.googleapis.com/youtube/v3/search?key={GOOGLE_API_KEY}&channelId={TOM_SCOTT_ID}&part=snippet,id&type=video&maxResults=1'
 
-#app = Flask(__name__)
 intents = Intents.default()
 intents.message_content = True
 
